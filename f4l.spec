@@ -1,6 +1,11 @@
 %define name	f4l
-%define version	0.2
-%define release %mkrel 2
+%define version	0.2.1
+%define cvs	20071120
+%if %cvs
+%define release %mkrel 0.%cvs.1
+%else
+%define release %mkrel 1
+%endif
 
 %define __libtoolize /bin/true
 
@@ -8,63 +13,76 @@ Name: 	 	%{name}
 Summary: 	Flash animation editor
 Version: 	%{version}
 Release: 	%{release}
-
-Source:		%{name}-%{version}.tar.bz2
+%if %cvs
+Source0:	%{name}-%{cvs}.tar.lzma
+%else
+Source0:	%{name}-%{version}.tar.gz
+%endif
 URL:		http://f4l.sourceforge.net/
-License:	GPL
+License:	GPLv2+
 Group:		Graphics
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	qt3-devel ImageMagick
-Provides:	flash4linux f4l
+BuildRequires:	qt3-devel
+BuildRequires:	doxygen
+BuildRequires:	ImageMagick
 Obsoletes:	f4lm
-#Provides:	f4lm
 
 %description
 Flash for Linux is an SWF editor, similar to Macromedia Flash.
 
 %prep
+%if %cvs
+%setup -q -n %{name}
+%else
 %setup -q
+%endif
 
 %build
 make QTDIR=/usr/lib/qt3
 										
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall
 
-#menu
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat << EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}): command="%{name}" icon="%{name}.png" needs="x11" title="Flash for Linux" longtitle="SWF animation editor" section="Multimedia/Graphics"
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop <<EOF
+[Desktop Entry]
+Name=Flash for Linux
+Comment=Flash editor
+Exec=%{_bindir}/f4lm
+Icon=%{name}
+Terminal=false
+Type=Application
+StartupNotify=true
+MimeType=foo/bar;foo2/bar2;
+Categories=QT;Development;GUIDesigner;Graphics;2DGraphics;VectorGraphics;
 EOF
 
 #icons
-mkdir -p $RPM_BUILD_ROOT/%_liconsdir
-convert -size 48x48 src/cursor/main_ico.xpm $RPM_BUILD_ROOT/%_liconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_iconsdir
-convert -size 32x32 src/cursor/main_ico.xpm $RPM_BUILD_ROOT/%_iconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_miconsdir
-convert -size 16x16 src/cursor/main_ico.xpm $RPM_BUILD_ROOT/%_miconsdir/%name.png
+mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
+convert -size 48x48 f4lm/main_ico.xpm %{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+mkdir -p %{buildroot}/%_iconsdir
+convert -size 32x32 f4lm/main_ico.xpm %{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+mkdir -p %{buildroot}/%_miconsdir
+convert -size 16x16 f4lm/main_ico.xpm %{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 
-mkdir -p $RPM_BUILD_ROOT/%_bindir
-cp bin/* $RPM_BUILD_ROOT/%_bindir
-
-%find_lang %name
+%find_lang %{name}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
-%update_menus
-		
+%{update_menus}
+%{update_icon_cache hicolor}
+
 %postun
-%clean_menus
+%{clean_menus}
+%{clean_icon_cache hicolor}
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-#%doc AUTHORS COPYING ChangeLog README TODO
-%{_bindir}/%name
-%{_menudir}/%name
-%{_liconsdir}/%name.png
-%{_iconsdir}/%name.png
-%{_miconsdir}/%name.png
+%doc AUTHORS ChangeLog README TODO
+%{_bindir}/f4lm
+%{_datadir}/applications/mandriva-%{name}.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+
