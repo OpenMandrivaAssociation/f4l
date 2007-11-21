@@ -38,6 +38,7 @@ Flash for Linux is an SWF editor, similar to Macromedia Flash.
 %endif
 
 %build
+perl -pi -e 's,/usr/lib,%{_libdir},g' Makefile
 make QTDIR=%{_libdir}/qt3
 										
 %install
