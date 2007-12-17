@@ -21,7 +21,6 @@ Source0:	%{name}-%{version}.tar.gz
 URL:		http://f4l.sourceforge.net/
 License:	GPLv2+
 Group:		Graphics
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	qt3-devel
 BuildRequires:	doxygen
 BuildRequires:	ImageMagick
