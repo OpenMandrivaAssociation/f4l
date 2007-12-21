@@ -2,7 +2,7 @@
 %define version	0.2.1
 %define cvs	20071120
 %if %cvs
-%define release %mkrel 0.%cvs.1
+%define release %mkrel 0.%cvs.2
 %else
 %define release %mkrel 1
 %endif
