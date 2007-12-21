@@ -55,7 +55,7 @@ Terminal=false
 Type=Application
 StartupNotify=true
 MimeType=foo/bar;foo2/bar2;
-Categories=QT;Development;GUIDesigner;Graphics;2DGraphics;VectorGraphics;
+Categories=Qt;Development;GUIDesigner;Graphics;2DGraphics;VectorGraphics;
 EOF
 
 #icons
