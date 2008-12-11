@@ -24,7 +24,7 @@ Group:		Graphics
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	qt3-devel
 BuildRequires:	doxygen
-BuildRequires:	ImageMagick
+BuildRequires:	imagemagick
 Obsoletes:	f4lm
 
 %description
