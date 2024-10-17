@@ -18,7 +18,7 @@ Source0:	%{name}-%{cvs}.tar.lzma
 %else
 Source0:	%{name}-%{version}.tar.gz
 %endif
-URL:		http://f4l.sourceforge.net/
+URL:		https://f4l.sourceforge.net/
 License:	GPLv2+
 Group:		Graphics
 BuildRoot:	%{_tmppath}/%{name}-buildroot
