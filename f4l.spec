@@ -22,6 +22,11 @@ URL:		https://f4l.sourceforge.net/
 License:	GPLv2+
 Group:		Graphics
 BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	qt3-devel
 BuildRequires:	doxygen
 BuildRequires:	imagemagick
