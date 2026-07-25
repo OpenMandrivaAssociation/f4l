@@ -2,9 +2,9 @@
 %define version	0.2.1
 %define cvs	20071120
 %if %cvs
-%define release %mkrel 0.%cvs.3
+%define release 1
 %else
-%define release %mkrel 3
+%define release 4
 %endif
 
 %define __libtoolize /bin/true
